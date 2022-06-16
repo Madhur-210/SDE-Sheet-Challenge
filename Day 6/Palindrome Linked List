@@ -1,0 +1,64 @@
+bool isPalindrome(LinkedListNode<int> *head)
+{
+    //Write your code here
+    if(head==NULL){
+        return true;
+    }
+    LinkedListNode<int>* temp=head;
+    int count=0;
+    while(temp!=NULL){
+        temp=temp->next;
+        count++;
+    }
+    temp=head;
+    LinkedListNode<int> *h1=head;
+    int i=0;
+    while(i<count/2-1){
+        temp=temp->next;
+        i++;
+    }
+    LinkedListNode<int>*h2=temp->next;
+    temp->next=NULL;
+    LinkedListNode<int> *p=NULL;
+    LinkedListNode<int> *c=h2;
+    LinkedListNode<int>*n=NULL;
+    while(c!=NULL){
+        n=c->next;
+        c->next=p;
+        p=c;
+        c=n;
+    }
+    h2=p;
+    while(h1!=NULL && h2!=NULL){
+        if(h1->data!=h2->data){
+            return false;
+        }
+        h1=h1->next;
+        h2=h2->next;
+    }
+    return true;
+}
+
+// Striver's Code Much Cleaner
+bool isPalindrome(node* head) {
+    if(head==NULL||head->next==NULL) return true;
+        
+    node* slow = head;
+    node* fast = head;
+        
+    while(fast->next!=NULL&&fast->next->next!=NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+        
+    slow->next = reverse(slow->next);
+    slow = slow->next;
+    node* dummy = head;
+        
+    while(slow!=NULL) {
+        if(dummy->num != slow->num) return false;
+        dummy = dummy->next;
+        slow = slow->next;
+    }
+    return true;
+}
