@@ -1,0 +1,48 @@
+//  My Code
+int size(ListNode*head){
+        if(head==0)return 0;
+        return 1+size(head->next);
+    }
+    ListNode* rotateRight(ListNode* head, int k) {
+        int s;
+        if(head==NULL)return head;
+        k=k%(s=size(head));
+         if(head==NULL || k==0)return head;
+        ListNode*slow=head;
+        ListNode*fast=head;
+        int i=0;
+        while(i<k){
+            fast=fast->next;
+            i++;
+        }
+        while(fast->next!=NULL){
+            fast=fast->next;
+            slow=slow->next;
+        }
+        ListNode*temp=slow->next;
+        slow->next=NULL;
+        fast->next=head;
+        return temp;
+}
+
+// Striver's Cleaner Code
+node* rotateRight(node* head,int k) {
+    if(head == NULL||head->next == NULL||k == 0) return head;
+    //calculating length
+    node* temp = head;
+    int length = 1;
+    while(temp->next != NULL) {
+        ++length;
+        temp = temp->next;
+    }
+    //link last node to first node
+    temp->next = head;
+    k = k%length; //when k is more than length of list
+    int end = length-k; //to get end of the list
+    while(end--) temp = temp->next;
+    //breaking last node link and pointing to NULL
+    head = temp->next;
+    temp->next = NULL;
+        
+    return head;
+}
