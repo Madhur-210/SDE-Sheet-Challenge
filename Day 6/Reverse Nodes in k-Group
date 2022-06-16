@@ -1,0 +1,83 @@
+class Solution {
+public:
+    
+    ListNode *reverseLinkedListRec(ListNode *head){
+    //Write your code here
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    ListNode *newhead=reverseLinkedListRec(head->next);
+    ListNode *temp=newhead;
+    head->next->next=head;
+    head->next=NULL;
+    return newhead;
+}
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+        
+	//Write your code here
+    if(head==NULL){
+        return head;
+    }
+    if(k==0){
+        return head;
+    }
+    int count=0;
+    ListNode *temp=head;
+    while(temp!=NULL && count<k-1){
+        temp=temp->next;
+        count++;
+    }
+    if(temp==NULL){
+        return (head);
+    }
+    ListNode *nexthead=temp->next;
+    temp->next=NULL;
+    ListNode *anstail=head;
+    ListNode *anshead=reverseLinkedListRec(head); 
+    anstail->next=reverseKGroup(nexthead,k);
+    return anshead;
+}
+};
+
+//  Code Studio Code  // Since it was different
+Node *reverseLinkedListRec(Node *head){
+    //Write your code here
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node *newhead=reverseLinkedListRec(head->next);
+    Node *temp=newhead;
+    head->next->next=head;
+    head->next=NULL;
+    return newhead;
+}
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+	// Write your code here.
+    if(head==NULL){
+        return head;
+    }
+    if(n==0){
+        return head;
+    }
+    if(b[0]==0)return getListAfterReverseOperation(head,n-1,b+1);
+    int k=b[0];
+    int count=0;
+    Node *temp=head;
+    while(temp!=NULL && count<k-1){
+        temp=temp->next;
+        count++;
+    }
+    if(temp==NULL && k!=count+1){
+        return reverseLinkedListRec(head);
+    }
+    if(temp==NULL){
+        return reverseLinkedListRec(head);
+    }
+    Node *nexthead=temp->next;
+    temp->next=NULL;
+    Node *anstail=head;
+    Node *anshead=reverseLinkedListRec(head); 
+    anstail->next=getListAfterReverseOperation(nexthead,n-1,b+1);
+    return anshead;
+}
