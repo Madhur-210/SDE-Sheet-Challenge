@@ -1,0 +1,60 @@
+// time - O(N)+O(N)  space - O(N)
+Node* copyRandomList(Node* head) {
+        Node* storehead = head;
+        Node* newhead = NULL;
+        Node* newtail = NULL;
+        unordered_map<Node*,Node*>map;
+        while(head){
+            Node*newNode = new Node(head->val);
+            if(newhead==NULL){
+                newhead = newtail = newNode;
+            }
+            else{
+                newtail->next = newNode;
+                newtail = newtail->next;
+            }
+            map[head] = newNode;
+            head = head->next;
+        }
+        Node* anshead = newhead;
+        while(storehead){
+            newhead->random = map[storehead->random];
+            storehead = storehead->next;
+            newhead = newhead->next;
+        }
+        return anshead;
+}
+
+// time - O(N)+O(N)+O(N)  space - O(1)
+Node* copyRandomList(Node* head) {
+        // Base Case
+        if(head == NULL) return NULL;
+        // Step I
+        Node* originalhead = head;
+        Node* newhead = NULL;
+        while(head){
+            Node*newNode = new Node(head->val);
+            if(newhead==NULL){
+                newhead = newNode;
+            }
+            newNode->next = head->next;
+            head->next = newNode;
+            head = newNode->next;
+        }
+        // Step II
+        head = originalhead;
+        while(head){
+            if(head->random)
+            head->next->random = head->random->next;
+            else head->next->random = head->random;
+            head = head->next->next;
+        }
+        // Step III
+        head = originalhead;
+        while(head->next){
+            Node * h1  = head->next;
+            head->next = head->next->next;
+            head = h1;
+        }
+        return newhead;
+}
