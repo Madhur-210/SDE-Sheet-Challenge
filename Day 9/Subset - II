@@ -1,0 +1,26 @@
+//   I used the commented part previously but then realised that it isn't necessary
+class Solution {
+public:
+    void subsets(vector<int>& nums,int i,vector<vector<int>>&ans,vector<int>store){
+        // if(i >= nums.size()){
+            ans.push_back(store);
+        //     return;
+        // }
+        for(int j=i;j<nums.size();j++){
+            // if(j==nums.size()){
+            //     subsets(nums,j+1,ans,store); continue; }
+            if(j!=i && nums[j]==nums[j-1]) continue;
+            store.push_back(nums[j]);
+            subsets(nums,j+1,ans,store);
+            store.pop_back();
+        }
+    }
+    
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        sort(nums.begin(),nums.end());
+        subsets(nums,0,ans,temp);
+        return ans;
+    }
+};
