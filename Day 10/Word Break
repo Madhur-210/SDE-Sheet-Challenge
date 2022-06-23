@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+void word(string &s,int index,unordered_map<string,bool> &map,string temp,vector<string>&ans){
+    
+    if(index==s.size()){
+        ans.push_back(temp);
+        return;
+    }
+    string curr="";
+    for(int i=index;i<s.size();i++){
+        curr+=s[i];
+        if(map[curr]){
+            word(s,i+1,map,temp+curr+" ",ans);
+        }
+    }
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    // Write your code here
+    unordered_map<string,bool> map;
+    for(string str:dictionary){
+        map[str] = true;
+    }
+    string temp="";
+    vector<string>ans;
+    word(s,0,map,temp,ans);
+    return ans;
+}
