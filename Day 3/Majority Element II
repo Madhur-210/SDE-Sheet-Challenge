@@ -1,0 +1,42 @@
+// Using Hashmap
+vector<int> majorityElement(vector<int>& nums) {
+        unordered_map<int,int>map;
+        for(int i:nums) map[i]+=1;
+        vector<int>ans;
+        for(auto i:map){
+            if(i.second>nums.size()/3){
+                ans.push_back(i.first);
+            }
+        }
+        return ans;
+}
+// Using Moore Voting Algo
+vector<int> majorityElementII(vector<int> &arr)
+{
+    // Write your code here.
+    vector<int>ans;
+    int num1 = -1;
+    int num2 = -1;
+    int c1,c2;
+    c1=c2=0;
+    for(int i:arr){
+        if(i==num1){
+            c1++;
+        }
+        else if(i==num2) c2++;
+        else if(c1==0) {num1 = i;c1++;}
+        else if(c2==0) {c2++;num2 = i;}
+        else{
+            c1--;
+            c2--;
+        }
+    }
+    c1 = 0, c2 = 0;
+    for(int i:arr){
+        if(num1==i) c1++;
+        else if(num2 == i) c2++;
+    }
+    if(c1>arr.size()/3) ans.push_back(num1);
+    if(c2>arr.size()/3) ans.push_back(num2);
+    return ans;
+}
