@@ -1,0 +1,45 @@
+int majorityElement(vector<int>& nums) {
+        int count =0 ,ele;
+        for(int i:nums){
+            if(count == 0){
+                ele = i;
+                count++;
+            }
+            else if(i!=ele){
+                count--;
+            }
+            else {
+                count++;
+            }
+        }
+        return ele;
+}
+// Code Studio Code
+#include <bits/stdc++.h> 
+int findMajorityElement(int arr[], int n) {
+    // Write your code here.
+    int count = 0 ,ele;
+    for(int i=0;i<n;i++){
+        if(count == 0){
+            ele = arr[i];
+            count++;
+        }
+        else if(arr[i]!=ele){
+            count--;
+        }
+        else {
+            count++;
+        }
+    }
+    count = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(arr[i] == ele)  
+        {
+            count++;
+        }
+    }
+    if(count > n / 2)  
+        return ele;
+    return -1;
+}
