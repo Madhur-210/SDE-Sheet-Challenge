@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+long long merge(long long input[],int si ,int ei){
+    long long size=ei-si+1;
+    long long mid=(si+ei)/2;
+    long long output[size];
+    long long i=si,j=mid+1,k=0,inv = 0;
+    while(i<=mid && j<=ei){
+        if(input[i]<=input[j]){
+            output[k]=input[i];
+            k++;
+            i++;
+        }
+        else{
+            inv += (mid-i+1);
+            output[k]=input[j];
+            k++;
+            j++;
+        }
+    }
+    while(i<=mid){
+        output[k]=input[i];
+        k++;
+        i++;
+    }
+    while(j<=ei){
+        output[k]=input[j];
+        k++;
+        j++;
+    }
+    for(long long i=0;i<size;i++){
+        input[si+i]=output[i];
+    }
+    return inv;
+}
+long long mergeSort(long long input[],int s,int e){
+    if(s>=e){
+        return 0;
+    }
+    int mid=(s+e)/2;
+    long long ans = 0;
+    ans += mergeSort(input,s,mid);
+    ans += mergeSort(input,mid+1,e);
+    ans += merge(input,s,e);
+    return ans;
+}
+long long mergeSort(long long input[], int size){
+    // Write your code here
+      return mergeSort(input,0,size-1);
+}
+long long getInversions(long long *arr, int n){
+    // Write your code here.
+    return mergeSort(arr,n);
+}
