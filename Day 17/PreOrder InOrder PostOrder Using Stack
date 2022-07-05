@@ -1,0 +1,62 @@
+vector<int> preorderTraversal(TreeNode*curr) {
+    vector < int > preOrder;
+    if (curr == NULL)
+        return preOrder;
+
+    stack < TreeNode * > s;
+    s.push(curr);
+    
+    while (!s.empty()) {
+        TreeNode * topNode = s.top();
+        preOrder.push_back(topNode -> val);
+        s.pop();
+        if (topNode -> right != NULL)
+            s.push(topNode -> right);
+        if (topNode -> left != NULL)
+            s.push(topNode -> left);
+    }
+    return preOrder;
+}
+
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> ans;
+    stack<TreeNode*> st;
+    st.push(root);
+    while(!st.empty()){
+        TreeNode*fromstack = st.top();
+        st.pop();
+        ans.push_back(fromstack->val);
+        if(fromstack->right)
+            st.push(fromstack->right);
+        if(fromstack->left)
+            st.push(fromstack->left);
+    }
+    return ans;
+}
+
+vector<int> postorderTraversal(TreeNode* cur) {
+    vector < int > postOrder;
+    if (cur == NULL) return postOrder;
+
+    stack < TreeNode * > st;
+    while (cur != NULL || !st.empty()) {
+
+        if (cur != NULL) {
+            st.push(cur);
+            cur = cur -> left;
+        } else {
+            TreeNode * temp = st.top() -> right;
+            if (temp == NULL) {
+                temp = st.top();
+                st.pop();
+                postOrder.push_back(temp -> val);
+                while (!st.empty() && temp == st.top() -> right) {
+                    temp = st.top();
+                    st.pop();
+                    postOrder.push_back(temp -> val);
+                }
+            } else cur = temp;
+        }
+    }
+    return postOrder;
+}
